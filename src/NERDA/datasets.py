@@ -13,6 +13,11 @@ from typing import Union, List, Dict
 from urllib.request import urlopen
 from zipfile import ZipFile
 import ssl
+import sys
+
+# Unlimit the csv file size to maxInt. 
+maxInt = sys.maxsize
+csv.field_size_limit(maxInt)
 
 def download_unzip(url_zip: str,
                    dir_extract: str) -> str:
@@ -199,7 +204,7 @@ def get_conll_data(split: str = 'train',
     # read data from file.
     data = []
     with open(file_path, 'r') as file:
-        reader = csv.reader(file, delimiter = ' ')
+        reader = csv.reader(file, delimiter = ' ', quotechar='|') # fix quote char double quote 
         for row in reader:
             data.append([row])
 
